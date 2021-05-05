@@ -1,0 +1,75 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <title>Artists</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <p></p>
+    <h2>
+        artists.
+    </h2>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="artist : ${artists}">
+            <td>
+                <a th:href="@{/artist/{artistId}(artistId = ${artist.getId()})}" th:text="${artist.getName()}">
+                </a>
+            </td>
+            <td th:text="${artist.getDescription()}">
+            </td>
+            <td>
+                <form class="form-inline">
+                    <input hidden="hidden" name="artistId" th:value="${artist.getId()}">
+                    <select th:id="'select-user-artist-' + ${artist.getId()}"
+                            class="form-select-sm" name="username">
+                        <option selected>Choose user</option>
+                        <option th:each="user : ${users}" th:text="${user.getUserName()}"
+                                th:value="${user.getUserName()}"></option>
+                    </select>
+                    <button th:id="'btn-likeArtist-' + ${artist.getId()}"
+                            th:onclick="likeArtist(artist.getId())"
+                            class="btn btn-dark"
+                            type="submit">Like
+                    </button>
+                </form>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <form method="post" th:action="@{/artists}">
+        <p>
+            <input class="form-control-sm" name="name" placeholder="name" type="text">
+        </p>
+        <p>
+            <textarea class="form-control-sm" name="description" placeholder="description" rows="3"></textarea>
+        </p>
+        <p>
+            <button class="btn btn-dark" type="submit">new.</button>
+        </p>
+    </form>
+</div>
+
+</body>
+
+</html>

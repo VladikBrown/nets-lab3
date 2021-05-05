@@ -1,0 +1,149 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <title>Artist Details</title>
+</head>
+<body style="background-color: floralwhite">
+
+<!--#f9f9f9-->
+<div th:replace="fragments/header :: header"></div>
+<div class="container rounded " style="background-color: white; border: solid black">
+    <div class="container">
+        <h3 th:text="'Listen to fabulous music from The fantastic ' + ${artist.getName()} + '!'"></h3>
+        <form action="#" th:action="@{/artist/{artistId}(artistId = ${artist.getId()})}" th:method="put"
+              th:object="${artist}">
+            <div>
+                <input hidden="hidden" th:field="*{id}">
+                <div>
+                    <label for="artistName">
+                        Name:
+                    </label>
+                    <p><input class="form-control-sm align-items-center" id="artistName" name="name" th:value="*{name}"
+                              type="text"/>
+                    </p>
+                </div>
+                <div>
+                    <label for="description">
+                        Description:
+                    </label>
+                    <p><input class="form-control-sm" id="description" name="description" th:value="*{description}"
+                              type="text"/>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-1">
+                    <button class="btn btn-dark" type="submit">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </form>
+        <p></p>
+        <div class="col-12 col-md-1">
+            <form th:action="@{artist/{artistId}(artistId = ${artist.getId()})}" th:method="delete">
+                <button class="btn btn-dark" type="submit">
+                    Delete
+                </button>
+            </form>
+        </div>
+        <p></p>
+    </div>
+
+    <div class="container">
+        <h3>discography.</h3>
+        <div th:each="album : ${artist.getAlbums()}">
+            <form class="form-inline">
+                <label class="col-form-label-lg" th:for="'select-user-album' + ${album.getId()}"
+                       style="font-size: x-large;padding-right: 100px"
+                       th:text="'&quot;' + ${album.getName()} + '&quot;'">
+                </label>
+                <input hidden="hidden" name="albumId" th:value="${album.getId()}">
+                <select th:id="'select-user-album' + ${album.getId()}" class="form-select-sm" name="username">
+                    <option selected>Choose user</option>
+                    <option th:each="user : ${users}" th:text="${user.getUserName()}"
+                            th:value="${user.getUserName()}"></option>
+                </select>
+                <button th:id="'btn-likeAlbum-' + ${album.getId()}"
+                        th:onclick="likeAlbum(album.getId())"
+                        class="btn btn-dark"
+                        type="button">Like
+                </button>
+            </form>
+            <p></p>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>artist</th>
+                    <th>name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="track : ${album.getTracks()}">
+                    <td>
+                        <a th:action="@{/artist/{artistId}(artistId = ${artist.getId()})}"
+                           th:text="${artist.getName()}">
+                        </a>
+                    </td>
+                    <td>
+                        <a th:action="@{/track/{trackId}(trackId = ${track.getId()})}"
+                           th:text="${track.getName()}">
+                        </a>
+                    </td>
+                    <td>
+                        <form class="form-inline">
+                            <input hidden="hidden" name="trackId" th:value="${track.getId()}">
+                            <select th:id="'select-user-track' + ${track.getId()}" class="form-select-sm"
+                                    name="username">
+                                <option selected>Choose user</option>
+                                <option th:each="user : ${users}" th:text="${user.getUserName()}"
+                                        th:value="${user.getId()}"></option>
+                            </select>
+                            <button th:id="'btn-likeTrack-' + ${track.getId()}"
+                                    th:onclick="likeTrack(${track.getId()})"
+                                    class="btn btn-dark"
+                                    type="button">Like
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p th:text="'here you can append new track to &quot;' + ${album.getName() + '&quot;.'}"></p>
+            <form class="form-inline" method="post"
+                  th:action="@{/album/{albumId}/track(albumId = ${album.getId()})}">
+                <input class="form-control-sm" name="name" type="text">
+                <button class="btn btn-dark" type="submit">Add</button>
+            </form>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <div>
+            <p>
+                here you can add new album.
+            </p>
+            <form method="post" th:action="@{/artist/{artistId}/album(artistId = ${artist.getId()})}">
+                <p>
+                    <input class="form-control-sm" name="name" placeholder="name" type="text">
+                    <input class="form-control-sm" name="releaseDate" placeholder="releaseDate" type="text">
+                </p>
+                <p>
+                    <textarea class="form-control-sm" name="description" placeholder="description" rows="3"></textarea>
+                </p>
+                <button class="btn btn-dark" type="submit">Add</button>
+                <br/>
+                <br/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

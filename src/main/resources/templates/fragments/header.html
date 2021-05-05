@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="../../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link href="../static/css/master.css" rel="stylesheet" th:href="@{/css/master.css}"/>
+    <script type="text/javascript"
+            src="../../static/js/ajax.js"></script>
+    <title>Header</title>
+</head>
+
+<body>
+<div class="container-fluid" th:fragment="header">
+    <div class="row">
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: floralwhite">
+                <a class="navbar-brand" href="#">brownify.</a>
+                <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"
+                        data-target="#navbarNavAltMarkup" data-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" href="#" th:href="@{/users}">Users</a>
+                        <a class="nav-link" href="#" th:href="@{/artists}">Artists</a>
+                        <a class="nav-link" href="#" th:href="@{/albums}">Albums</a>
+                        <a class="nav-link" href="#" th:href="@{/tracks}">Tracks</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>

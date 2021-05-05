@@ -1,0 +1,61 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <title>Users</title>
+</head>
+
+<body class="my-body">
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container main-content">
+    <p></p>
+    <h2>
+        users.
+    </h2>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Second Name</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td>
+                <a th:href="@{/user/{userId}(userId = ${user.getId()})}" th:text="${user.getUserName()}">
+                </a>
+            </td>
+            <td th:text="${user.getFirstName()}">
+            </td>
+            <td th:text="${user.getSecondName()}"></td>
+            <td>
+                <form th:action="@{/user/{userId}(userId = ${user.getId()})}"
+                      th:method="delete">
+                    <button class="btn btn-dark" type="submit">
+                        .delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a class="btn btn-dark" th:href="@{/user}">new.</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>
