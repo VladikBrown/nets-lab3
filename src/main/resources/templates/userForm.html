@@ -8,12 +8,13 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/css/master.css}"/>
     <title>User Registration</title>
 </head>
-<body>
+<body class="my-body">
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container">
+<div class="container main-content">
     <br>
     <form method="post" th:action="@{/users}">
         <div class="form-group">

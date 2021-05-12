@@ -8,136 +8,140 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/css/master.css}"/>
     <title>User Details</title>
 </head>
-<body>
+<body class="my-body">
 
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container">
-    <h3 th:text="${user.getUserName()} + '\'s private page'"></h3>
-    <form action="#" th:action="@{/user/{userId}(userId = ${user.getId()})}" th:method="put" th:object="${user}">
-        <div>
-            <input hidden="hidden" th:field="*{id}" th:value="${user.getId()}">
+<div class="container main-content">
+    <div class="container">
+        <h3 th:text="${user.getUserName()} + '\'s private page'"></h3>
+        <form action="#" th:action="@{/user/{userId}(userId = ${user.getId()})}" th:method="put" th:object="${user}">
             <div>
-                <label for="userName">
-                    Username:
-                </label>
-                <p><input class="form-control-sm align-items-center" id="userName" name="userName"
-                          th:value="*{userName}"
-                          type="text"/></p>
+                <input hidden="hidden" th:field="*{id}" th:value="${user.getId()}">
+                <div>
+                    <label for="userName">
+                        Username:
+                    </label>
+                    <p><input class="form-control-sm align-items-center" id="userName" name="userName"
+                              th:value="*{userName}"
+                              type="text"/></p>
+                </div>
+                <div>
+                    <label for="firstName">
+                        First Name:
+                    </label>
+                    <p><input class="form-control-sm" id="firstName" name="userName" th:value="*{firstName}"
+                              type="text"/>
+                    </p>
+                </div>
+                <div>
+                    <label for="secondName">
+                        Second Name:
+                    </label>
+                    <p><input class="form-control-sm" id="secondName" name="userName" th:value="*{secondName}"
+                              type="text"/>
+                    </p>
+                </div>
             </div>
-            <div>
-                <label for="firstName">
-                    First Name:
-                </label>
-                <p><input class="form-control-sm" id="firstName" name="userName" th:value="*{firstName}" type="text"/>
-                </p>
+            <div class="row">
+                <div class="col-12 col-md-1">
+                    <button class="btn btn-dark" type="submit">
+                        Update
+                    </button>
+                </div>
             </div>
-            <div>
-                <label for="secondName">
-                    Second Name:
-                </label>
-                <p><input class="form-control-sm" id="secondName" name="userName" th:value="*{secondName}" type="text"/>
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-1">
-                <button class="btn btn-dark" type="submit">
-                    Update
-                </button>
-            </div>
-        </div>
-    </form>
-    <p></p>
-    <div class="col-12 col-md-1">
-        <form th:action="@{user/{userId}(userId = ${user.getId()})}" th:method="delete">
-            <button class="btn btn-dark" type="submit">
-                Delete
-            </button>
         </form>
+        <p></p>
+        <div class="col-12 col-md-1">
+            <form th:action="@{user/{userId}(userId = ${user.getId()})}" th:method="delete">
+                <button class="btn btn-dark" type="submit">
+                    Delete
+                </button>
+            </form>
+        </div>
+        <p></p>
     </div>
-    <p></p>
-</div>
 
-<div class="container">
-    <h3>Liked Artists</h3>
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th>Artist's Name</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="artist : ${user.getLikedArtists()}">
-            <td>
-                <a th:href="@{/artist/{artistId}(artistId = ${artist.getId()})}"
-                   th:text="${artist.getName()}">
-                </a>
-            </td>
-            <td th:text="${artist.getDescription()}">
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="container">
-    <h3>Liked Albums</h3>
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th>Album's Name</th>
-            <th>Description</th>
-            <th>Release Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="album : ${user.getLikedAlbums()}">
-            <td>
-                <a th:href="@{/album/{albumId}(albumId = ${album.getId()})}"
-                   th:text="${album.getName()}">
-                </a>
-            </td>
-            <td th:text="${album.getDescription()}">
-            </td>
-            <td th:text="${album.getReleaseDate()}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="container">
-    <h3>Liked Tracks</h3>
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th>Artist</th>
-            <th>Album</th>
-            <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- todo fix getting info from track -->
-        <tr th:each="track : ${user.getLikedTracks()}">
-            <td>
-                <a th:href="@{/artist/{artistId}(artistId = ${track.getAlbum().getArtist().getId()})}"
-                   th:text="${track.getAlbum().getArtist().getName()}">
-                </a>
-            </td>
-            <td>
-                <a th:href="@{/album/{albumId}(albumId = ${track.getAlbum().getId()})}"
-                   th:text="${track.getAlbum().getName()}">
-                </a>
-            </td>
-            <td>
-                <a th:href="@{/track/{trackId}(trackId = ${track.getId()})}"
-                   th:text="${track.getName()}">
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <h3>Liked Artists</h3>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Artist's Name</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="artist : ${user.getLikedArtists()}">
+                <td>
+                    <a th:href="@{/artist/{artistId}(artistId = ${artist.getId()})}"
+                       th:text="${artist.getName()}">
+                    </a>
+                </td>
+                <td th:text="${artist.getDescription()}">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h3>Liked Albums</h3>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Album's Name</th>
+                <th>Description</th>
+                <th>Release Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="album : ${user.getLikedAlbums()}">
+                <td>
+                    <a th:href="@{/album/{albumId}(albumId = ${album.getId()})}"
+                       th:text="${album.getName()}">
+                    </a>
+                </td>
+                <td th:text="${album.getDescription()}">
+                </td>
+                <td th:text="${album.getReleaseDate()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h3>Liked Tracks</h3>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="track : ${user.getLikedTracks()}">
+                <td>
+                    <a th:href="@{/artist/{artistId}(artistId = ${track.getAlbum().getArtist().getId()})}"
+                       th:text="${track.getAlbum().getArtist().getName()}">
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/album/{albumId}(albumId = ${track.getAlbum().getId()})}"
+                       th:text="${track.getAlbum().getName()}">
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/track/{trackId}(trackId = ${track.getId()})}"
+                       th:text="${track.getName()}">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

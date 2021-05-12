@@ -7,11 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @Controller
 @RequestMapping("/user")
 public class UserDetailsController {
 
-    public static final String URL_PREFIX = "http://localhost:8080";
+    public static final String URL_PREFIX = "http://back:8080";
 
     @Autowired
     private RestTemplate restTemplate;
@@ -53,6 +54,6 @@ public class UserDetailsController {
 
     @PutMapping("/{userId}/track/{trackId}")
     public void likeTrack(@PathVariable String userId, @PathVariable String trackId) {
-        restTemplate.put(URL_PREFIX + "/" + "user/" + userId + "/trackId/" + trackId, null);
+        restTemplate.put(URL_PREFIX + "/" + "user/" + userId + "/track/" + trackId, null);
     }
 }

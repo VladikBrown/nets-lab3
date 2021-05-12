@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  front:
+    build:
+      context: .
+      dockerfile: front.Dockerfile
+    image: 'lab3:latest'
+    container_name: front
+    ports:
+      - 9090:9090
+    depends_on:
+      - back
+  back:
+    image: 'lab2:latest'
+    build:
+      context: .
+      dockerfile: back.Dockerfile
+    container_name: back
+    ports:
+      - 8080:8080
+    depends_on:
+      - db2
+    restart: unless-stopped
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db2:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=resu
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_DATA_SOURCE_INITIALIZATION_MODE=always
+      - SPRING_DATASOURCE_CONTINUE_ON_ERROR=true
+  db2:
+    image: 'postgres:13.1-alpine'
+    container_name: db2
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=resu
+      - POSTGRES_DB=postgres
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+volumes:
+  database-data:

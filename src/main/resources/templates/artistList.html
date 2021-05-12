@@ -7,15 +7,19 @@
     <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link rel="stylesheet" th:href="@{/css/master.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            th:src="@{/js/ajax.js}"></script>
     <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
     <title>Artists</title>
 </head>
 
-<body>
+<body class="my-body">
 
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container">
+<div class="container main-content">
     <p></p>
     <h2>
         artists.
@@ -43,7 +47,7 @@
                             class="form-select-sm" name="username">
                         <option selected>Choose user</option>
                         <option th:each="user : ${users}" th:text="${user.getUserName()}"
-                                th:value="${user.getUserName()}"></option>
+                                th:value="${user.getId()}"></option>
                     </select>
                     <button th:id="'btn-likeArtist-' + ${artist.getId()}"
                             th:onclick="likeArtist(artist.getId())"

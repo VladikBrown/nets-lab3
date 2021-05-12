@@ -3,7 +3,7 @@ function likeTrack(trackId) {
     let likeTrackButtonId = 'btn-likeTrack-' + trackId;
     $(document).ready(function () {
         $('#' + likeTrackButtonId).prop("disabled", true);
-        $.put('/user/' + userId + 'track/' + trackId, {
+        $.put('/user/' + userId + '/track/' + trackId, {
             userId: userId,
             trackId: trackId
         }).done(function (data) {
@@ -18,7 +18,7 @@ function likeAlbum(albumId) {
     let likeAlbumButtonId = 'btn-likeAlbum-' + albumId;
     $(document).ready(function () {
         $('#' + likeAlbumButtonId).prop("disabled", true);
-        $.put('/user/' + userId + 'album/' + albumId, {
+        $.put('/user/' + userId + '/album/' + albumId, {
             userId: userId,
             albumId: albumId
         }).done(function (data) {
@@ -33,7 +33,7 @@ function likeArtist(artistId) {
     let likeArtistButtonId = 'btn-likeArtist-' + artistId;
     $(document).ready(function () {
         $('#' + likeArtistButtonId).prop("disabled", true);
-        $.put('/user/' + userId + 'artist/' + artistId, {
+        $.put('/user/' + userId + '/artist/' + artistId, {
             userId: userId,
             artistId: artistId
         }).done(function (data) {
@@ -42,3 +42,21 @@ function likeArtist(artistId) {
         })
     });
 }
+
+jQuery.each( [ "put", "delete" ], function( i, method ) {
+    jQuery[ method ] = function( url, data, callback, type ) {
+        if ( jQuery.isFunction( data ) ) {
+            type = type || callback;
+            callback = data;
+            data = undefined;
+        }
+
+        return jQuery.ajax({
+            url: url,
+            type: method,
+            dataType: type,
+            data: data,
+            success: callback
+        });
+    };
+});

@@ -8,6 +8,10 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/css/master.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            th:src="@{/js/ajax.js}"></script>
     <title>Artist Details</title>
 </head>
 <body style="background-color: floralwhite">
@@ -69,12 +73,13 @@
                 <select th:id="'select-user-album' + ${album.getId()}" class="form-select-sm" name="username">
                     <option selected>Choose user</option>
                     <option th:each="user : ${users}" th:text="${user.getUserName()}"
-                            th:value="${user.getUserName()}"></option>
+                            th:value="${user.getId()}"></option>
                 </select>
                 <button th:id="'btn-likeAlbum-' + ${album.getId()}"
-                        th:onclick="likeAlbum(album.getId())"
+                        th:onclick="|likeAlbum(${album.getId()})|"
                         class="btn btn-dark"
-                        type="button">Like
+                        type="button">
+                        Like
                 </button>
             </form>
             <p></p>
@@ -107,7 +112,7 @@
                                         th:value="${user.getId()}"></option>
                             </select>
                             <button th:id="'btn-likeTrack-' + ${track.getId()}"
-                                    th:onclick="likeTrack(${track.getId()})"
+                                    th:onclick="|likeTrack(${track.getId()})|"
                                     class="btn btn-dark"
                                     type="button">Like
                             </button>
